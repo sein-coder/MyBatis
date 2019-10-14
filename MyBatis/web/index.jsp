@@ -11,7 +11,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="${path }/firstMybatis">첫 마이바티스(입력,insert)</a>
+	<p><a href="${path }/firstMybatis">첫 마이바티스(입력,insert)</a></p>
+	
+	<p><a href="${path }/nameInput">이름입력 후 대입</a></p>
+	
+	<p><a href="${path }/inputAll">학생 입력</a></p>
+	
+	<p><a href="${path }/deleteStudent">학생 삭제</a></p>
+	
+	<p><a href="${path }/selectCount">전체 학생 수 조회</a></p>
+	
+	<p><a href="${path }/selectList">전체 학생 조회</a></p>
 	
 </body>
 </html>

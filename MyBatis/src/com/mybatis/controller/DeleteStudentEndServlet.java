@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mybatis.model.service.MybatisService1;
-
 /**
- * Servlet implementation class FirstMybatisServlet
+ * Servlet implementation class DeleteStudentEndServlet
  */
-@WebServlet("/firstMybatis")
-public class FirstMybatisServlet extends HttpServlet {
+@WebServlet("/deleteStudentEnd")
+public class DeleteStudentEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FirstMybatisServlet() {
+    public DeleteStudentEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +26,11 @@ public class FirstMybatisServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// student테이블에 값을 넣는다
 		
-		int result = new MybatisService1().insertStudent();
+		int student_no = Integer.parseInt(request.getParameter("student_no"));
 		
-		response.getWriter().append(result>0?"입력성공":"입력실패");
+		
+		
 	}
 
 	/**

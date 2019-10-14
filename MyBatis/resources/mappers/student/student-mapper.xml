@@ -4,4 +4,65 @@
 	<insert id="insertStudent"><!-- id가 쿼리문을 지칭하는 명칭 -->
 		insert into student values(1,'유병승','01036446259','prince0324@naver.com','경기도 시흥시',sysdate)
 	</insert><!-- 세미콜론을 쓰지않는다. enter(줄바꿈)으로부터 자유롭다. -->
+	<insert id="insertStudentName" parameterType="string">
+		insert into student values(seq_studentno.nextval, #{name},'01036446259','prince0324@naver.com','경기도 시흥시',sysdate)
+	</insert>
+	<insert id="insertStudentAll" parameterType="com.mybatis.model.vo.Student"><!-- 일반객체일 경우 풀네임으로 써야 인식된다. -->
+		INSERT INTO STUDENT VALUES(seq_studentno.nextval, #{student_name}, #{student_tel} , #{student_email}, #{student_addr}, sysdate )
+	</insert>
+	
+	<!-- select문 구현하기
+		반드시 id속성과 resultType||resultMap속성을 설정해야한다.
+		ParameterType속성은 
+	 -->
+	
+	<select id="selectCount" resultType="_int">
+		SELECT COUNT(*) FROM STUDENT
+	</select>
+	
+	<!-- <select id="selectOne" resultType="com.mybatis.model.vo.Student" parameterType="_int"> -->
+	<select id="selectOne" resultMap="studentMap" parameterType="_int">
+<!-- 		SELECT student_no as studentNo,
+			student_name as studentName,
+			student_tel as studentTel,
+			student_email as studentEmail,
+			student_addr as studentAddr,
+			reg_date as regDate 
+	 	FROM STUDENT WHERE STUDENT_NO = #{no} -->
+	 	SELECT * FROM STUDENT WHERE STUDENT_NO = #{no}
+	</select>
+	<resultMap type="student" id="studentMap">
+		<result property="studentNo" column="student_no"/>
+		<result property="studentName" column="student_name"/>
+		<result property="studentTel" column="student_tel"/>
+		<result property="studentEmail" column="student_email"/>
+		<result property="studentAddr" column="student_addr"/>
+	</resultMap>
+	
+	<!-- map을 이용해 데이터받기 -->
+	<select id="selectOneMap" parameterType="_int" resultType="map">
+		select * from student where student_no = #{no}
+	</select>
+		
+	<delete id="">
+	
+	</delete>
+	
+	<select id="selectStudentList" resultMap="studentMap">
+		select * from student
+	</select>
+	
+	<!-- Map으로 리스트결과 처리하기 -->
+	<select id="selectStudentList2" resultType="map">
+		select * from student
+	</select>
+	
+<!-- 	<select id="selectStudentSearch" parameterType="string" resultType="map">
+		select * from student where student_name like '%'||#{name}||'%'
+	</select> -->
+	
+	<select id="selectStudentSearch" parameterType="map" resultType="map">
+		select * from student where student_name like '%'||#{name}||'%' and student_tel like '%'||#{phone}||'%'
+	</select>
+	
 </mapper>

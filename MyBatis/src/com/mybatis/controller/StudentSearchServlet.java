@@ -1,25 +1,30 @@
 package com.mybatis.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mybatis.model.service.MybatisService1;
+import com.mybatis.model.service.MybatisService;
+import com.mybatis.model.service.MybatisServiceImpl;
 
 /**
- * Servlet implementation class FirstMybatisServlet
+ * Servlet implementation class StudentSearchServlet
  */
-@WebServlet("/firstMybatis")
-public class FirstMybatisServlet extends HttpServlet {
+@WebServlet("/studentSearchName")
+public class StudentSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private MybatisService service = new MybatisServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FirstMybatisServlet() {
+    public StudentSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +33,17 @@ public class FirstMybatisServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// student테이블에 값을 넣는다
+		System.out.println("실행");
+		request.setCharacterEncoding("UTF-8");
+		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
 		
-		int result = new MybatisService1().insertStudent();
-		
-		response.getWriter().append(result>0?"입력성공":"입력실패");
+		Map<String,String> param = new HashMap();
+		param.put("name",name);
+		param.put("phone",phone);
+		List<Map> list = service.selectStudentSearch(param);
+		request.setAttribute("list2", list);
+		request.getRequestDispatcher("/views/studentList.jsp").forward(request, response);
 	}
 
 	/**

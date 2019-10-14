@@ -1,25 +1,31 @@
 package com.mybatis.controller;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mybatis.model.service.MybatisService1;
+import com.mybatis.model.service.MybatisService;
+import com.mybatis.model.service.MybatisServiceImpl;
+import com.mybatis.model.vo.Student;
 
 /**
- * Servlet implementation class FirstMybatisServlet
+ * Servlet implementation class SelectStudentListServlet
  */
-@WebServlet("/firstMybatis")
-public class FirstMybatisServlet extends HttpServlet {
+@WebServlet("/selectList")
+public class SelectStudentListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MybatisService service=new MybatisServiceImpl();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FirstMybatisServlet() {
+    public SelectStudentListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,11 +34,13 @@ public class FirstMybatisServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// student테이블에 값을 넣는다
+		List<Student> list=service.selectStudentList();
 		
-		int result = new MybatisService1().insertStudent();
-		
-		response.getWriter().append(result>0?"입력성공":"입력실패");
+		List<Map> list2 = service.selectStudentList2();
+
+		request.setAttribute("list", list);
+		request.setAttribute("list2", list2);
+		request.getRequestDispatcher("/views/studentList.jsp").forward(request, response);
 	}
 
 	/**
